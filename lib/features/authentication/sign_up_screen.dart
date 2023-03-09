@@ -16,14 +16,18 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
+  void onEmailTap(BuildContext context) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Sizes.size40),
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size40,
+          ),
           child: Column(
-            children: const [
+            children: [
               Gaps.v80,
               Text(
                 "Sign up for TikTok",
@@ -42,9 +46,12 @@ class SignUpScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
-              AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.user),
-                  text: 'Use mail & password'),
+              GestureDetector(
+                onTap: () => onEmailTap(context),
+                child: AuthButton(
+                    icon: FaIcon(FontAwesomeIcons.user),
+                    text: 'Use mail & password'),
+              ),
               Gaps.v10,
               AuthButton(
                   icon: FaIcon(FontAwesomeIcons.apple),
