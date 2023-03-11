@@ -12,7 +12,7 @@ class SignUpScreen extends StatelessWidget {
   void _onLoginTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => LoginScreen(),
+        builder: (context) => const LoginScreen(),
       ),
     );
   }
@@ -20,7 +20,7 @@ class SignUpScreen extends StatelessWidget {
   void _onEmailTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => EmailScreen(),
+        builder: (context) => const EmailScreen(),
       ),
     );
   }
