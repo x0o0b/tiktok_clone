@@ -31,7 +31,7 @@ class _InterestButtonState extends State<InterestButton> {
         ),
         padding: const EdgeInsets.symmetric(
           vertical: Sizes.size16,
-          horizontal: Sizes.size24,
+          horizontal: Sizes.size20,
         ),
         decoration: BoxDecoration(
             color: _isSelected ? Theme.of(context).primaryColor : Colors.white,
