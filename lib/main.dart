@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 
 void main() {
   runApp(const TikTokApp());
@@ -26,7 +26,7 @@ class TikTokApp extends StatelessWidget {
                 fontSize: Sizes.size16 + Sizes.size2,
                 fontWeight: FontWeight.w600,
               ))),
-      home: const InterestsScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
