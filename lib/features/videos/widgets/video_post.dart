@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -29,6 +31,7 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  bool _isSeeMore = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -41,7 +44,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
-
+    await _videoPlayerController.setLooping(true);
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
@@ -57,11 +60,6 @@ class _VideoPostState extends State<VideoPost>
       upperBound: 1.5,
       value: 1.5,
       duration: _animationDuration,
-    );
-    _animationController.addListener(
-      () {
-        setState(() {});
-      },
     );
   }
 
@@ -90,6 +88,12 @@ class _VideoPostState extends State<VideoPost>
     });
   }
 
+  void _onSeeMoreTap() {
+    setState(() {
+      _isSeeMore = !_isSeeMore;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -112,8 +116,14 @@ class _VideoPostState extends State<VideoPost>
           Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: Transform.scale(
-                  scale: _animationController.value,
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child,
+                    );
+                  },
                   child: AnimatedOpacity(
                     opacity: _isPaused ? 1 : 0,
                     duration: _animationDuration,
@@ -125,6 +135,83 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 15,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "@hoseonn",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Sizes.size20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Gaps.v10,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      child: Text(
+                        'dfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfs',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: _isSeeMore ? 999 : 1,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: Sizes.size16,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: _onSeeMoreTap,
+                      child: const Text(
+                        " See more",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Sizes.size16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            right: 15,
+            child: Column(
+              children: const [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  foregroundImage: NetworkImage(
+                    "https://avatars.githubusercontent.com/u/102401551?v=4",
+                  ),
+                  child: Text("data"),
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidHeart,
+                  text: "2.9M",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidComment,
+                  text: "33K",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.share,
+                  text: "Share",
+                ),
+              ],
             ),
           ),
         ],
