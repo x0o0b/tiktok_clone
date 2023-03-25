@@ -179,7 +179,7 @@ class _VideoPostState extends State<VideoPost>
                       child: Text(
                         'dfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfs',
                         overflow: TextOverflow.ellipsis,
-                        maxLines: _isSeeMore ? 999 : 1,
+                        maxLines: _isSeeMore ? 999 : 2,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: Sizes.size16,
@@ -188,9 +188,9 @@ class _VideoPostState extends State<VideoPost>
                     ),
                     GestureDetector(
                       onTap: _onSeeMoreTap,
-                      child: const Text(
-                        " See more",
-                        style: TextStyle(
+                      child: Text(
+                        !_isSeeMore ? " 자세히" : " 간단히",
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: Sizes.size16,
                             fontWeight: FontWeight.bold),
