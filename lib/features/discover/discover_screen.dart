@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -23,11 +22,11 @@ class DiscoverScreen extends StatefulWidget {
 
 class _DiscoverScreenState extends State<DiscoverScreen>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _textEditingController = TextEditingController(
-    text: "Inital Text",
-  );
+  final TextEditingController _textEditingController = TextEditingController();
 
   late final TabController _tabController;
+
+  String _searchtext = "";
 
   void _onSearchChanged(String value) {
     print(value);
@@ -37,15 +36,33 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     print(value);
   }
 
+  void _onClearTab() {
+    _textEditingController.clear();
+  }
+
+  void _onStopSearch() {
+    FocusScope.of(context).unfocus();
+  }
+
   @override
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: tabs.length, vsync: this);
+    _textEditingController.addListener(() {
+      setState(() {
+        _searchtext = _textEditingController.text;
+      });
+    });
+
+    _tabController = TabController(
+      length: tabs.length,
+      vsync: this,
+    );
+
     _tabController.addListener(
       () {
         if (_tabController.indexIsChanging) {
-          FocusScope.of(context).unfocus();
+          _onStopSearch;
         }
       },
     );
@@ -53,6 +70,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
 
   @override
   void dispose() {
+    _tabController.dispose();
     _textEditingController.dispose();
     super.dispose();
   }
@@ -63,11 +81,82 @@ class _DiscoverScreenState extends State<DiscoverScreen>
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 1,
-        title: CupertinoSearchTextField(
-          controller: _textEditingController,
-          onChanged: _onSearchChanged,
-          onSubmitted: _onSearchSubmitted,
+        title: Row(
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: Sizes.size40,
+                child: TextField(
+                  controller: _textEditingController,
+                  onChanged: _onSearchChanged,
+                  onSubmitted: _onSearchSubmitted,
+                  decoration: InputDecoration(
+                    hintText: "Write a comment...",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        Sizes.size4,
+                      ),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    contentPadding: EdgeInsets.zero,
+                    icon: GestureDetector(
+                      onTap: _onStopSearch,
+                      child: const FaIcon(
+                        FontAwesomeIcons.arrowLeft,
+                        color: Colors.black,
+                      ),
+                    ),
+                    prefixIcon: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        FaIcon(
+                          FontAwesomeIcons.magnifyingGlass,
+                          color: Colors.black,
+                          size: Sizes.size20,
+                        ),
+                      ],
+                    ),
+                    suffixIcon: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (_searchtext.isNotEmpty)
+                          GestureDetector(
+                            onTap: _onClearTab,
+                            child: FaIcon(
+                              FontAwesomeIcons.solidCircleXmark,
+                              color: Colors.grey.shade600,
+                              size: Sizes.size20,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            padding: const EdgeInsets.only(
+              left: Sizes.size4,
+            ),
+            splashRadius: 1,
+            icon: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                FaIcon(
+                  FontAwesomeIcons.sliders,
+                ),
+              ],
+            ),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           splashFactory: NoSplash.splashFactory,
