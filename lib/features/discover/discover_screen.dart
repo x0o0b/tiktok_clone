@@ -104,7 +104,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                     icon: GestureDetector(
                       onTap: _onStopSearch,
                       child: const FaIcon(
-                        FontAwesomeIcons.arrowLeft,
+                        FontAwesomeIcons.chevronLeft,
                         color: Colors.black,
                       ),
                     ),
