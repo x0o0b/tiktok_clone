@@ -146,7 +146,6 @@ class _DiscoverScreenState extends State<DiscoverScreen>
             padding: const EdgeInsets.only(
               left: Sizes.size4,
             ),
-            splashRadius: 1,
             icon: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: const [
