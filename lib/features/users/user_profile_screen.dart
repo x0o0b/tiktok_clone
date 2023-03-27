@@ -41,6 +41,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
+                    Gaps.v3,
                     const CircleAvatar(
                       radius: 50,
                       foregroundImage: NetworkImage(
@@ -48,15 +49,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                       child: Text("hoseon"),
                     ),
-                    Gaps.v20,
+                    Gaps.v10,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "@Hoseen",
+                          "@Hoseon",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: Sizes.size16,
+                            fontSize: Sizes.size18,
                           ),
                         ),
                         Gaps.h5,
@@ -67,7 +68,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                       ],
                     ),
-                    Gaps.v24,
+                    Gaps.v16,
                     SizedBox(
                       height: Sizes.size48,
                       child: Row(
@@ -103,27 +104,74 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                     ),
                     Gaps.v14,
-                    FractionallySizedBox(
-                      widthFactor: 0.33,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: Sizes.size12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(Sizes.size4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 180,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(Sizes.size3),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Follow',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
-                        child: const Text(
-                          'Follow',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                        Gaps.h4,
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey.shade300,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(
+                                Sizes.size3,
+                              ),
+                            ),
                           ),
-                          textAlign: TextAlign.center,
+                          child: const Center(
+                            child: FaIcon(
+                              FontAwesomeIcons.youtube,
+                              size: Sizes.size24,
+                            ),
+                          ),
                         ),
-                      ),
+                        Gaps.h4,
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey.shade300,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(
+                                Sizes.size4,
+                              ),
+                            ),
+                          ),
+                          child: const Center(
+                            child: FaIcon(
+                              FontAwesomeIcons.caretDown,
+                              size: Sizes.size12,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Gaps.v14,
                     const Padding(
