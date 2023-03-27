@@ -177,14 +177,45 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 itemBuilder: (context, index) => Column(
                   children: [
-                    AspectRatio(
-                      aspectRatio: 9 / 13,
-                      child: FadeInImage.assetNetwork(
-                        fit: BoxFit.cover,
-                        placeholder: "assets/images/kayoko.jpeg",
-                        image:
-                            "https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
-                      ),
+                    Stack(
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 9 / 13,
+                          child: FadeInImage.assetNetwork(
+                            fit: BoxFit.cover,
+                            placeholder: "assets/images/kayoko.jpeg",
+                            image:
+                                "https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(
+                              Sizes.size2,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                FaIcon(
+                                  Icons.play_arrow_outlined,
+                                  color: Colors.white,
+                                  size: Sizes.size18,
+                                ),
+                                Gaps.h3,
+                                Text(
+                                  "61.2K",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: Sizes.size12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),
