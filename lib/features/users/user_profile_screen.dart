@@ -15,6 +15,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         SliverAppBar(
           floating: true,
           stretch: true,
+          snap: true,
+          pinned: true,
           backgroundColor: Colors.teal,
           collapsedHeight: 80,
           expandedHeight: 230,
@@ -22,6 +24,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             stretchModes: const [
               StretchMode.blurBackground,
               StretchMode.zoomBackground,
+              StretchMode.fadeTitle,
             ],
             background: Image.asset(
               "assets/images/kayoko.jpeg",
@@ -30,6 +33,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             title: const Text("Hello!"),
           ),
         ),
+        SliverFixedExtentList(
+          delegate: SliverChildBuilderDelegate(
+            childCount: 50,
+            (context, index) => Container(
+              color: Colors.teal,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text("Item $index"),
+              ),
+            ),
+          ),
+          itemExtent: 100,
+        )
       ],
     );
   }
