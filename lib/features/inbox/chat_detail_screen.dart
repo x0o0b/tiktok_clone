@@ -11,6 +11,20 @@ class ChatDetailScreen extends StatefulWidget {
 }
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
+  final TextEditingController _textEditingController = TextEditingController();
+
+  String _chattext = "";
+
+  @override
+  void initState() {
+    _textEditingController.addListener(() {
+      setState(() {
+        _chattext = _textEditingController.text;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,19 +133,59 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             bottom: 0,
             width: MediaQuery.of(context).size.width,
             child: BottomAppBar(
-              color: Colors.grey.shade50,
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: TextField(),
-                  ),
-                  Gaps.h20,
-                  Container(
-                    child: const FaIcon(
-                      FontAwesomeIcons.paperPlane,
+              color: Colors.grey.shade100,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: Sizes.size8,
+                  bottom: Sizes.size2,
+                  right: Sizes.size20,
+                  left: Sizes.size20,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _textEditingController,
+                        decoration: InputDecoration(
+                          hintText: "Send a message...",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              Sizes.size20,
+                            ),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: Sizes.size12,
+                            horizontal: Sizes.size10,
+                          ),
+                          suffixIcon: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              FaIcon(
+                                FontAwesomeIcons.faceSmile,
+                                color: Colors.black,
+                                size: Sizes.size24,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  )
-                ],
+                    Gaps.h20,
+                    GestureDetector(
+                      onTap: () {},
+                      child: FaIcon(
+                        FontAwesomeIcons.paperPlane,
+                        color: _chattext.isNotEmpty
+                            ? Colors.black
+                            : Colors.grey.shade500,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )
