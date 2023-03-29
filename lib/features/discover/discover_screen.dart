@@ -84,10 +84,15 @@ class _DiscoverScreenState extends State<DiscoverScreen>
       appBar: AppBar(
         elevation: 1,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: SizedBox(
+            Flexible(
+              child: Container(
                 height: Sizes.size40,
+                constraints: const BoxConstraints(
+                  maxWidth: Breakpoints.sm,
+                  minWidth: 0,
+                ),
                 child: TextField(
                   controller: _textEditingController,
                   onChanged: _onSearchChanged,
@@ -103,13 +108,6 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                     filled: true,
                     fillColor: Colors.grey.shade200,
                     contentPadding: EdgeInsets.zero,
-                    icon: GestureDetector(
-                      onTap: _onStopSearch,
-                      child: const FaIcon(
-                        FontAwesomeIcons.chevronLeft,
-                        color: Colors.black,
-                      ),
-                    ),
                     prefixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -141,6 +139,19 @@ class _DiscoverScreenState extends State<DiscoverScreen>
               ),
             ),
           ],
+        ),
+        leading: IconButton(
+          onPressed: _onStopSearch,
+          icon: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              FaIcon(
+                FontAwesomeIcons.chevronLeft,
+                color: Colors.black,
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
