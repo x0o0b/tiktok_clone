@@ -34,6 +34,7 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
   bool _isSeeMore = false;
+  bool _isVolume = true;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -49,6 +50,7 @@ class _VideoPostState extends State<VideoPost>
     await _videoPlayerController.setLooping(true);
     if (kIsWeb) {
       await _videoPlayerController.setVolume(0);
+      _isVolume = false;
     }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
@@ -117,6 +119,17 @@ class _VideoPostState extends State<VideoPost>
       builder: (context) => const VideoComments(),
     );
     _onTogglePause();
+  }
+
+  void _onVolumeTap() {
+    if (_isVolume) {
+      _videoPlayerController.setVolume(100);
+    } else {
+      _videoPlayerController.setVolume(0);
+    }
+    setState(() {
+      _isVolume = !_isVolume;
+    });
   }
 
   @override
@@ -220,6 +233,16 @@ class _VideoPostState extends State<VideoPost>
                     "https://avatars.githubusercontent.com/u/102401551?v=4",
                   ),
                   child: Text("user"),
+                ),
+                Gaps.v24,
+                GestureDetector(
+                  onTap: _onVolumeTap,
+                  child: VideoButton(
+                    icon: !_isVolume
+                        ? FontAwesomeIcons.volumeXmark
+                        : FontAwesomeIcons.volumeHigh,
+                    text: "Valume",
+                  ),
                 ),
                 Gaps.v24,
                 const VideoButton(
