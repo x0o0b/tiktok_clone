@@ -91,7 +91,6 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                 height: Sizes.size40,
                 constraints: const BoxConstraints(
                   maxWidth: Breakpoints.sm,
-                  minWidth: 0,
                 ),
                 child: TextField(
                   controller: _textEditingController,
