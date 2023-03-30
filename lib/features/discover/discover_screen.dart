@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
+import 'package:tiktok_clone/utils.dart';
 
 final tabs = [
   "Top",
@@ -105,15 +106,19 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.grey.shade200,
+                    fillColor: isDarkmode(context)
+                        ? Colors.grey.shade800
+                        : Colors.grey.shade200,
                     contentPadding: EdgeInsets.zero,
                     prefixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         FaIcon(
                           FontAwesomeIcons.magnifyingGlass,
-                          color: Colors.black,
+                          color: isDarkmode(context)
+                              ? Colors.grey.shade500
+                              : Colors.black,
                           size: Sizes.size20,
                         ),
                       ],
@@ -127,7 +132,9 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                             onTap: _onClearTab,
                             child: FaIcon(
                               FontAwesomeIcons.solidCircleXmark,
-                              color: Colors.grey.shade600,
+                              color: isDarkmode(context)
+                                  ? Colors.grey.shade500
+                                  : Colors.grey.shade600,
                               size: Sizes.size20,
                             ),
                           ),
@@ -147,7 +154,6 @@ class _DiscoverScreenState extends State<DiscoverScreen>
             children: const [
               FaIcon(
                 FontAwesomeIcons.chevronLeft,
-                color: Colors.black,
               ),
             ],
           ),
@@ -179,9 +185,6 @@ class _DiscoverScreenState extends State<DiscoverScreen>
             fontWeight: FontWeight.w600,
             fontSize: Sizes.size16,
           ),
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.grey.shade500,
-          indicatorColor: Colors.black,
           tabs: [
             for (var tab in tabs)
               Tab(
@@ -239,7 +242,9 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                   if (constraints.maxWidth < 200 || constraints.maxWidth > 250)
                     DefaultTextStyle(
                       style: TextStyle(
-                        color: Colors.grey.shade600,
+                        color: isDarkmode(context)
+                            ? Colors.grey.shade300
+                            : Colors.grey.shade600,
                         fontWeight: FontWeight.w600,
                       ),
                       child: Row(
