@@ -162,7 +162,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
           IconButton(
             onPressed: () {},
             padding: const EdgeInsets.only(
-              left: Sizes.size4,
+              right: Sizes.size12,
             ),
             icon: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -234,6 +234,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                     style: const TextStyle(
                       fontSize: Sizes.size16,
                       fontWeight: FontWeight.bold,
+                      height: 1.1,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
