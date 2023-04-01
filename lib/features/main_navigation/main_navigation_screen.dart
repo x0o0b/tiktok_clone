@@ -11,8 +11,6 @@ import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  static var routeName = "/main";
-
   const MainNavigationScreen({super.key});
 
   @override
