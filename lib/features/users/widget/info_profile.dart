@@ -24,13 +24,13 @@ class InfoProfile extends StatelessWidget {
             fontSize: Sizes.size18,
           ),
         ),
-        Gaps.v3,
+        Gaps.v2,
         Text(
           text,
           style: TextStyle(
             color: Colors.grey.shade500,
           ),
-        )
+        ),
       ],
     );
   }

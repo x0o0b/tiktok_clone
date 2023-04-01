@@ -153,7 +153,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                     alignment: Alignment.centerRight,
                     color: Colors.red,
                     padding: const EdgeInsets.only(
-                      left: Sizes.size10,
+                      right: Sizes.size10,
                     ),
                     child: const FaIcon(
                       FontAwesomeIcons.trashCan,

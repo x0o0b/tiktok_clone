@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/inbox/activity_screen.dart';
 import 'package:tiktok_clone/features/inbox/chats_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
@@ -48,10 +49,10 @@ class _InboxScreenState extends State<InboxScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            trailing: const FaIcon(
+            trailing: FaIcon(
               FontAwesomeIcons.chevronRight,
               size: Sizes.size14,
-              color: Colors.black,
+              color: isDarkmode(context) ? Colors.white : Colors.black,
             ),
           ),
           Container(
@@ -87,10 +88,10 @@ class _InboxScreenState extends State<InboxScreen> {
                 fontSize: Sizes.size14,
               ),
             ),
-            trailing: const FaIcon(
+            trailing: FaIcon(
               FontAwesomeIcons.chevronRight,
               size: Sizes.size14,
-              color: Colors.black,
+              color: isDarkmode(context) ? Colors.white : Colors.black,
             ),
           ),
         ],

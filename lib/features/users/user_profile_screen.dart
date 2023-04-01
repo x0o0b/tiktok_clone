@@ -77,7 +77,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             ),
                           ],
                         ),
-                        Gaps.v16,
+                        Gaps.v14,
                         SizedBox(
                           height: Sizes.size48,
                           child: Row(

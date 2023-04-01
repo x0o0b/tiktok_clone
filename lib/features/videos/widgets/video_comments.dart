@@ -152,7 +152,7 @@ class _VideoCommentsState extends State<VideoComments> {
                         alignment: Alignment.bottomCenter,
                         child: Container(
                           color: isDarkmode(context)
-                              ? Colors.grey.shade900
+                              ? Colors.grey.shade800
                               : Colors.white,
                           child: Container(
                             constraints: const BoxConstraints(
@@ -195,7 +195,7 @@ class _VideoCommentsState extends State<VideoComments> {
                                         ),
                                         filled: true,
                                         fillColor: isDarkmode(context)
-                                            ? Colors.grey.shade800
+                                            ? Colors.grey.shade700
                                             : Colors.grey.shade200,
                                         contentPadding:
                                             const EdgeInsets.symmetric(
