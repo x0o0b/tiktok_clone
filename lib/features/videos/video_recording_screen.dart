@@ -86,6 +86,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   Future<void> initPermissions() async {
     final cameraPermission = await Permission.camera.request();
     final micPermission = await Permission.microphone.request();
+    final photosPermission = await Permission.photos.request();
 
     final cameraDenied =
         cameraPermission.isDenied || cameraPermission.isPermanentlyDenied;
@@ -93,7 +94,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     final micDenied =
         micPermission.isDenied || micPermission.isPermanentlyDenied;
 
-    if (!cameraDenied && !micDenied) {
+    final photosDenied =
+        photosPermission.isDenied || photosPermission.isPermanentlyDenied;
+
+    if (!cameraDenied && !micDenied && !photosDenied) {
       _hasPermission = true;
       await initCamera();
       setState(() {});
