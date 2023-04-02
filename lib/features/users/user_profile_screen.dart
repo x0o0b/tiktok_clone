@@ -86,39 +86,36 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ],
                         ),
                         Gaps.v14,
-                        SizedBox(
-                          height: Sizes.size48,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const InfoProfile(
-                                num: '843',
-                                text: 'Following',
-                              ),
-                              VerticalDivider(
-                                width: Sizes.size32,
-                                thickness: Sizes.size1,
-                                color: Colors.grey.shade300,
-                                indent: Sizes.size14,
-                                endIndent: Sizes.size14,
-                              ),
-                              const InfoProfile(
-                                num: '10M',
-                                text: 'Followers',
-                              ),
-                              VerticalDivider(
-                                width: Sizes.size32,
-                                thickness: Sizes.size1,
-                                color: Colors.grey.shade300,
-                                indent: Sizes.size14,
-                                endIndent: Sizes.size14,
-                              ),
-                              const InfoProfile(
-                                num: '324.3M',
-                                text: 'Likes',
-                              ),
-                            ],
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const InfoProfile(
+                              num: '843',
+                              text: 'Following',
+                            ),
+                            VerticalDivider(
+                              width: Sizes.size32,
+                              thickness: Sizes.size1,
+                              color: Colors.grey.shade300,
+                              indent: Sizes.size14,
+                              endIndent: Sizes.size14,
+                            ),
+                            const InfoProfile(
+                              num: '10M',
+                              text: 'Followers',
+                            ),
+                            VerticalDivider(
+                              width: Sizes.size32,
+                              thickness: Sizes.size1,
+                              color: Colors.grey.shade300,
+                              indent: Sizes.size14,
+                              endIndent: Sizes.size14,
+                            ),
+                            const InfoProfile(
+                              num: '324.3M',
+                              text: 'Likes',
+                            ),
+                          ],
                         ),
                         Gaps.v14,
                         Row(
