@@ -13,6 +13,7 @@ class VideoRecordingScreen extends StatefulWidget {
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   bool _hasPermission = false;
+  bool _deniedPermissions = false;
 
   late final CameraController _cameraController;
 
@@ -45,6 +46,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
       _hasPermission = true;
       await initCamera();
       setState(() {});
+    } else {
+      _deniedPermissions = true;
+      setState(() {});
     }
   }
 
@@ -64,15 +68,19 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    "Initializing...",
-                    style:
-                        TextStyle(color: Colors.white, fontSize: Sizes.size20),
-                  ),
-                  Gaps.v20,
-                  CircularProgressIndicator.adaptive()
-                ],
+                children: _deniedPermissions
+                    ? [
+                        const Text("권한이 허용되지 않았습니다"),
+                      ]
+                    : [
+                        const Text(
+                          "Initializing...",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: Sizes.size20),
+                        ),
+                        Gaps.v20,
+                        const CircularProgressIndicator.adaptive()
+                      ],
               )
             : CameraPreview(_cameraController),
       ),
