@@ -14,8 +14,9 @@ class VideoRecordingScreen extends StatefulWidget {
 class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   bool _hasPermission = false;
   bool _deniedPermissions = false;
+  bool _isSelfieMode = false;
 
-  late final CameraController _cameraController;
+  late CameraController _cameraController;
 
   Future<void> initCamera() async {
     final cameras = await availableCameras();
@@ -25,7 +26,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     }
 
     _cameraController = CameraController(
-      cameras[0],
+      cameras[_isSelfieMode ? 1 : 0],
       ResolutionPreset.ultraHigh,
     );
 
@@ -58,12 +59,19 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     initPermissions();
   }
 
+  Future<void> _toggleSelfieMode() async {
+    _isSelfieMode = !_isSelfieMode;
+    await initCamera();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: !_hasPermission || !_cameraController.value.isInitialized
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +90,22 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                         const CircularProgressIndicator.adaptive()
                       ],
               )
-            : CameraPreview(_cameraController),
+            : Stack(
+                children: [
+                  CameraPreview(_cameraController),
+                  Positioned(
+                    bottom: Sizes.size52,
+                    right: Sizes.size20,
+                    child: IconButton(
+                      color: Colors.white,
+                      onPressed: _toggleSelfieMode,
+                      icon: const Icon(
+                        Icons.cameraswitch,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }
