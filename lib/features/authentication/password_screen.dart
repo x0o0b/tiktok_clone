@@ -160,7 +160,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         : Colors.grey.shade400,
                   ),
                   Gaps.h5,
-                  const Text('8 to 20 characters'),
+                  const Text(
+                    '8 to 20 characters',
+                    style: TextStyle(
+                      fontSize: Sizes.size12,
+                    ),
+                  ),
                 ],
               ),
               Gaps.v6,
@@ -174,7 +179,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         : Colors.grey.shade400,
                   ),
                   Gaps.h5,
-                  const Text('Letters, numbers, and special characters'),
+                  const Text(
+                    'Letters, numbers, and special characters',
+                    style: TextStyle(
+                      fontSize: Sizes.size12,
+                    ),
+                  ),
                 ],
               ),
               Gaps.v28,

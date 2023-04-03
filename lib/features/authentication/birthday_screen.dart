@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
@@ -31,12 +32,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const InterestsScreen(),
-      ),
-      (route) => false,
-    );
+    context.pushReplacementNamed(InterestsScreen.routeName);
   }
 
   void _setTextFieldDate(DateTime date) {
@@ -68,7 +64,9 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             Gaps.v8,
             const Text(
               "Your birthday won't be shown publicly.",
-              style: TextStyle(fontSize: Sizes.size16, color: Colors.black54),
+              style: TextStyle(
+                fontSize: Sizes.size16,
+              ),
             ),
             Gaps.v16,
             TextField(
