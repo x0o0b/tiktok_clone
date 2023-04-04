@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
@@ -121,16 +122,17 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
-  void _onVolumeTap() {
-    if (_isVolume) {
-      _videoPlayerController.setVolume(100);
-    } else {
-      _videoPlayerController.setVolume(0);
-    }
-    setState(() {
-      _isVolume = !_isVolume;
-    });
-  }
+  // void onVolumeTap() {
+  //   VideoConfigData.of(context).toggleMuted;
+  //   if (_isVolume) {
+  //     _videoPlayerController.setVolume(100);
+  //   } else {
+  //     _videoPlayerController.setVolume(0);
+  //   }
+  //   setState(() {
+  //     _isVolume = !_isVolume;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -236,9 +238,9 @@ class _VideoPostState extends State<VideoPost>
                 ),
                 Gaps.v24,
                 GestureDetector(
-                  onTap: _onVolumeTap,
+                  onTap: VideoConfigData.of(context).toggleMuted,
                   child: VideoButton(
-                    icon: !_isVolume // VideoConfig.of(context).autoMute
+                    icon: !_isVolume || VideoConfigData.of(context).autoMute
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
                     text: "Valume",
