@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/view/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/view/widgets/video_comments.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -68,6 +70,10 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
+
+    context
+        .read<PlaybackConfigViewModel>()
+        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -82,7 +88,10 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      _videoPlayerController.play();
+      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      if (autoplay) {
+        _videoPlayerController.play();
+      }
     }
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
       _onTogglePause();
@@ -121,15 +130,14 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
-  void _onVolumeTap() {
-    if (_isVolume) {
-      _videoPlayerController.setVolume(100);
-    } else {
+  void _onPlaybackConfigChanged() {
+    if (!mounted) return;
+    final muted = context.read<PlaybackConfigViewModel>().muted;
+    if (muted) {
       _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
     }
-    setState(() {
-      _isVolume = !_isVolume;
-    });
   }
 
   @override
@@ -237,10 +245,11 @@ class _VideoPostState extends State<VideoPost>
                 Gaps.v24,
                 GestureDetector(
                   onTap: () {
-                    _onVolumeTap();
+                    context.read<PlaybackConfigViewModel>().setMuted(
+                        !context.read<PlaybackConfigViewModel>().muted);
                   },
                   child: VideoButton(
-                    icon: !_isVolume
+                    icon: context.watch<PlaybackConfigViewModel>().muted
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
                     text: "Valume",
