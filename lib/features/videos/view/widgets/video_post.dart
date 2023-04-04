@@ -36,7 +36,7 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
   bool _isSeeMore = false;
-  bool _isVolume = true;
+  bool _isMuted = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -52,9 +52,9 @@ class _VideoPostState extends State<VideoPost>
     await _videoPlayerController.setLooping(true);
     if (kIsWeb) {
       await _videoPlayerController.setVolume(0);
-      _isVolume = false;
     }
     _videoPlayerController.addListener(_onVideoChange);
+    _initPlaybackConfigChanged();
     setState(() {});
   }
 
@@ -73,7 +73,7 @@ class _VideoPostState extends State<VideoPost>
 
     context
         .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
+        .addListener(_initPlaybackConfigChanged);
   }
 
   @override
@@ -130,14 +130,25 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
-  void _onPlaybackConfigChanged() {
+  void _initPlaybackConfigChanged() {
     if (!mounted) return;
     final muted = context.read<PlaybackConfigViewModel>().muted;
-    if (muted) {
-      _videoPlayerController.setVolume(0);
-    } else {
-      _videoPlayerController.setVolume(1);
-    }
+    setState(() {
+      _isMuted = muted;
+    });
+  }
+
+  _setMuted(bool isMuted) {
+    isMuted
+        ? _videoPlayerController.setVolume(0)
+        : _videoPlayerController.setVolume(1);
+  }
+
+  void _toggleMuted() {
+    _setMuted(!_isMuted);
+    setState(() {
+      _isMuted = !_isMuted;
+    });
   }
 
   @override
@@ -245,11 +256,10 @@ class _VideoPostState extends State<VideoPost>
                 Gaps.v24,
                 GestureDetector(
                   onTap: () {
-                    context.read<PlaybackConfigViewModel>().setMuted(
-                        !context.read<PlaybackConfigViewModel>().muted);
+                    _toggleMuted();
                   },
                   child: VideoButton(
-                    icon: context.watch<PlaybackConfigViewModel>().muted
+                    icon: _isMuted
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
                     text: "Valume",
