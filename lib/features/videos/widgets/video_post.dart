@@ -36,6 +36,7 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   bool _isSeeMore = false;
   bool _isVolume = true;
+  bool _autoMute = videoConfig.autoMute;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -69,6 +70,12 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
+
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.autoMute;
+      });
+    });
   }
 
   @override
@@ -122,17 +129,16 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
-  // void onVolumeTap() {
-  //   VideoConfigData.of(context).toggleMuted;
-  //   if (_isVolume) {
-  //     _videoPlayerController.setVolume(100);
-  //   } else {
-  //     _videoPlayerController.setVolume(0);
-  //   }
-  //   setState(() {
-  //     _isVolume = !_isVolume;
-  //   });
-  // }
+  void _onVolumeTap() {
+    if (_isVolume) {
+      _videoPlayerController.setVolume(100);
+    } else {
+      _videoPlayerController.setVolume(0);
+    }
+    setState(() {
+      _isVolume = !_isVolume;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -238,9 +244,9 @@ class _VideoPostState extends State<VideoPost>
                 ),
                 Gaps.v24,
                 GestureDetector(
-                  onTap: VideoConfigData.of(context).toggleMuted,
+                  onTap: videoConfig.toggleAutoMute,
                   child: VideoButton(
-                    icon: !_isVolume || VideoConfigData.of(context).autoMute
+                    icon: !_autoMute
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
                     text: "Valume",
