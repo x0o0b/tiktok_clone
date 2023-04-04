@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -36,7 +37,6 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   bool _isSeeMore = false;
   bool _isVolume = true;
-  bool _autoMute = videoConfig.value;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -70,12 +70,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-
-    videoConfig.addListener(() {
-      setState(() {
-        _autoMute = videoConfig.value;
-      });
-    });
   }
 
   @override
@@ -245,10 +239,10 @@ class _VideoPostState extends State<VideoPost>
                 Gaps.v24,
                 GestureDetector(
                   onTap: () {
-                    videoConfig.value = !videoConfig.value;
+                    context.read<VideoConfig>().toggleIsMuted();
                   },
                   child: VideoButton(
-                    icon: !_autoMute
+                    icon: !context.watch<VideoConfig>().isMuted
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
                     text: "Valume",
