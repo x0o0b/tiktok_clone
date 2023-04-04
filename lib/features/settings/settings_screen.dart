@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
 import '../../constants/breakpoints.dart';
 
@@ -48,17 +48,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               //   ),
               // ),
               SwitchListTile.adaptive(
-                value: context.watch<VideoConfig>().isMuted,
+                value: context.watch<PlaybackConfigViewModel>().muted,
                 onChanged: (value) =>
-                    context.read<VideoConfig>().toggleIsMuted(),
-                title: const Text("Enable notifications"),
-                subtitle: const Text("They will be cute."),
+                    context.read<PlaybackConfigViewModel>().setMuted(value),
+                title: const Text("Mute video"),
+                subtitle: const Text("Video will be muted by default"),
               ),
               SwitchListTile.adaptive(
-                value: _notifiactions,
-                onChanged: _onNotificationsChanged,
-                title: const Text("Enable notifications"),
-                subtitle: const Text("They will be cute."),
+                value: context.watch<PlaybackConfigViewModel>().autoplay,
+                onChanged: (value) =>
+                    context.read<PlaybackConfigViewModel>().setAutoplay(value),
+                title: const Text("Autoplay"),
+                subtitle: const Text("Video will start playing autoatically."),
               ),
               CheckboxListTile(
                 activeColor: Colors.black,
