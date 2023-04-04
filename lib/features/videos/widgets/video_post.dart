@@ -36,7 +36,7 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   bool _isSeeMore = false;
   bool _isVolume = true;
-  bool _autoMute = videoConfig.autoMute;
+  bool _autoMute = videoConfig.value;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -73,7 +73,7 @@ class _VideoPostState extends State<VideoPost>
 
     videoConfig.addListener(() {
       setState(() {
-        _autoMute = videoConfig.autoMute;
+        _autoMute = videoConfig.value;
       });
     });
   }
@@ -244,7 +244,9 @@ class _VideoPostState extends State<VideoPost>
                 ),
                 Gaps.v24,
                 GestureDetector(
-                  onTap: videoConfig.toggleAutoMute,
+                  onTap: () {
+                    videoConfig.value = !videoConfig.value;
+                  },
                   child: VideoButton(
                     icon: !_autoMute
                         ? FontAwesomeIcons.volumeXmark
