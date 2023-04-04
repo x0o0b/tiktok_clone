@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/video_preview_screen.dart';
-import 'package:tiktok_clone/features/videos/widgets/flash_button.dart';
+import 'package:tiktok_clone/features/videos/view/widgets/flash_button.dart';
 
 final List<dynamic> flashButtons = [
   {
