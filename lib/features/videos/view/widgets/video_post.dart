@@ -129,7 +129,7 @@ class VideoPostState extends ConsumerState<VideoPost>
     if (!mounted) return;
 
     setState(() {
-      _isMuted;
+      _isMuted = ref.read(playbackConfigProvider).muted;
     });
   }
 
