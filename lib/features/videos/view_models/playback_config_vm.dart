@@ -18,7 +18,7 @@ class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
   void setAutoplay(bool value) {
     _repository.setAutoplay(value);
     state = PlaybackConfigModel(
-      muted: state.autoplay,
+      muted: state.muted,
       autoplay: value,
     );
   }
