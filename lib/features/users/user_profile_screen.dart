@@ -69,7 +69,11 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                           children: [
                             Gaps.v20,
                             if (width < Breakpoints.lg) ...[
-                              Avatar(name: data.name),
+                              Avatar(
+                                name: data.name,
+                                uid: data.uid,
+                                hasAvatar: data.hasAvatar,
+                              ),
                               Gaps.v10,
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
