@@ -36,6 +36,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

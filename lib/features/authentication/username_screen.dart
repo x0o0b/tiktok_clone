@@ -33,12 +33,6 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    super.dispose();
-  }
-
   void _onNextTap() {
     if (_username.isEmpty) return;
     ref.read(signUpForm.notifier).state = {"name": _username};
@@ -48,6 +42,12 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
         builder: (context) => EmailScreen(username: _username),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
   }
 
   @override

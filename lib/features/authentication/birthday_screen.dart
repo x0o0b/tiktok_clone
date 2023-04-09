@@ -25,12 +25,6 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
     _setTextFieldDate(initialDate);
   }
 
-  @override
-  void dispose() {
-    _birthdayController.dispose();
-    super.dispose();
-  }
-
   void _onNextTap() {
     final state = ref.read(signUpForm.notifier).state;
     ref.read(signUpForm.notifier).state = {
@@ -43,6 +37,12 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   void _setTextFieldDate(DateTime date) {
     final textDate = date.toString().split(" ").first;
     _birthdayController.value = TextEditingValue(text: textDate);
+  }
+
+  @override
+  void dispose() {
+    _birthdayController.dispose();
+    super.dispose();
   }
 
   @override

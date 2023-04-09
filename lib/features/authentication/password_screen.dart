@@ -36,12 +36,6 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _passwordController.dispose();
-    super.dispose();
-  }
-
   bool _isPasswordValid() {
     return _password.isNotEmpty && _password.length > 8;
     //
@@ -76,6 +70,12 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
   void _toggleObscureText() {
     _obscureText = !_obscureText;
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override

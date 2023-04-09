@@ -17,7 +17,7 @@ class VideosRepository {
   }
 
   Future<void> saveVideo(VideoModel data) async {
-    await _db.collection("vidoes").add(data.toJson());
+    await _db.collection("videos").add(data.toJson());
   }
 }
 

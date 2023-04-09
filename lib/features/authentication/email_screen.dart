@@ -44,12 +44,6 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
-
   String? _isEmailValid() {
     if (_email.isEmpty) return null;
     final regExp = RegExp(
@@ -74,6 +68,12 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
         builder: (context) => const PasswordScreen(),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
   }
 
   @override

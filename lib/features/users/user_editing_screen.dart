@@ -26,13 +26,6 @@ class _UserEditingScreenState extends ConsumerState<UserEditingScreen> {
   late final TextEditingController _linkController =
       TextEditingController(text: widget.link);
 
-  @override
-  void dispose() {
-    _bioController.dispose();
-    _linkController.dispose();
-    super.dispose();
-  }
-
   void _onUpdateProfilePressed() async {
     await ref.read(usersProvider.notifier).updateProfile(
           bio: _bioController.text,
@@ -41,6 +34,14 @@ class _UserEditingScreenState extends ConsumerState<UserEditingScreen> {
         );
     if (!mounted) return;
     Navigator.of(context).pop();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _bioController.dispose();
+    _linkController.dispose();
+    super.dispose();
   }
 
   @override
