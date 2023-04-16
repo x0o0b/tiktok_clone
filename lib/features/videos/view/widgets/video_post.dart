@@ -4,19 +4,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/view/widgets/video_comments.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
+
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
+  final VideoModel videoData;
 
   final int index;
 
   const VideoPost({
     super.key,
+    required this.videoData,
     required this.onVideoFinished,
     required this.index,
   });
@@ -27,16 +31,15 @@ class VideoPost extends ConsumerStatefulWidget {
 
 class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
-  final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset("assets/videos/mika.mp4");
+  late final VideoPlayerController _videoPlayerController;
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  final bool _isMuted = false;
   bool _isSeeMore = false;
-  bool _isMuted = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -48,13 +51,14 @@ class VideoPostState extends ConsumerState<VideoPost>
   }
 
   void _initVideoPlayer() async {
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/videos/video.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     if (kIsWeb) {
       await _videoPlayerController.setVolume(0);
     }
     _videoPlayerController.addListener(_onVideoChange);
-    _initPlaybackConfigChanged();
     setState(() {});
   }
 
@@ -77,6 +81,23 @@ class VideoPostState extends ConsumerState<VideoPost>
     _videoPlayerController.dispose();
     _animationController.dispose();
     super.dispose();
+  }
+
+  void _toggleMuted() {
+    if (!mounted) return;
+    final muted = ref.read(playbackConfigProvider).muted;
+    ref.read(playbackConfigProvider.notifier).setMuted(!muted);
+    if (muted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
+    }
+  }
+
+  void _onSeeMoreTap() {
+    setState(() {
+      _isSeeMore = !_isSeeMore;
+    });
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
@@ -106,12 +127,6 @@ class VideoPostState extends ConsumerState<VideoPost>
     });
   }
 
-  void _onSeeMoreTap() {
-    setState(() {
-      _isSeeMore = !_isSeeMore;
-    });
-  }
-
   void _onCommentsTap(BuildContext context) async {
     if (_videoPlayerController.value.isPlaying) {
       _onTogglePause();
@@ -125,27 +140,6 @@ class VideoPostState extends ConsumerState<VideoPost>
     _onTogglePause();
   }
 
-  void _initPlaybackConfigChanged() {
-    if (!mounted) return;
-
-    setState(() {
-      _isMuted = ref.read(playbackConfigProvider).muted;
-    });
-  }
-
-  _setMuted(bool isMuted) {
-    isMuted
-        ? _videoPlayerController.setVolume(0)
-        : _videoPlayerController.setVolume(1);
-  }
-
-  void _toggleMuted() {
-    _setMuted(!_isMuted);
-    setState(() {
-      _isMuted = !_isMuted;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -156,8 +150,9 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(
-                    color: Colors.black,
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
                   ),
           ),
           Positioned.fill(
@@ -195,9 +190,9 @@ class VideoPostState extends ConsumerState<VideoPost>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "@hoseonn",
-                  style: TextStyle(
+                Text(
+                  "@${widget.videoData.creator}",
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: Sizes.size20,
                     fontWeight: FontWeight.bold,
@@ -210,7 +205,7 @@ class VideoPostState extends ConsumerState<VideoPost>
                     SizedBox(
                       width: 200,
                       child: Text(
-                        'dfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfsdfsdfsdfdsfs',
+                        widget.videoData.description,
                         overflow: TextOverflow.ellipsis,
                         maxLines: _isSeeMore ? 999 : 2,
                         style: const TextStyle(
@@ -239,14 +234,16 @@ class VideoPostState extends ConsumerState<VideoPost>
             right: 15,
             child: Column(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                   foregroundImage: NetworkImage(
-                    "https://avatars.githubusercontent.com/u/102401551?v=4",
+                    "https://firebasestorage.googleapis.com/v0/b/tiktok-clone-hoseon.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media",
                   ),
-                  child: Text("user"),
+                  child: Text(
+                    widget.videoData.creator,
+                  ),
                 ),
                 Gaps.v24,
                 GestureDetector(
@@ -261,16 +258,16 @@ class VideoPostState extends ConsumerState<VideoPost>
                   ),
                 ),
                 Gaps.v24,
-                const VideoButton(
+                VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: "2.9M",
+                  text: "${widget.videoData.likes}",
                 ),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
-                  child: const VideoButton(
+                  child: VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: "33K",
+                    text: "${widget.videoData.comments}",
                   ),
                 ),
                 Gaps.v24,

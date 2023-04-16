@@ -29,16 +29,13 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
 
   Future<void> _initVideo() async {
     _videoPlayerController = VideoPlayerController.file(
-      File(
-        widget.video.path,
-      ),
+      File(widget.video.path),
     );
 
     await _videoPlayerController.initialize();
-
     await _videoPlayerController.setLooping(true);
-
-    // await _videoPlayerController.play();
+    await _videoPlayerController.setVolume(0);
+//     await _videoPlayerController.play();
 
     setState(() {});
   }
@@ -49,12 +46,18 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
     _initVideo();
   }
 
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    super.dispose();
+  }
+
   Future<void> _saveToGallery() async {
     if (_savedVideo) return;
 
     await GallerySaver.saveVideo(
       widget.video.path,
-      albumName: "TikTok Clone",
+      albumName: "TikTok Clone!",
     );
 
     _savedVideo = true;
@@ -74,9 +77,7 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text(
-          "Preview video",
-        ),
+        title: const Text('Preview video'),
         actions: [
           if (!widget.isPicked)
             IconButton(
@@ -93,9 +94,7 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
                 : _onUploadPressed,
             icon: ref.watch(uploadVideoProvider).isLoading
                 ? const CircularProgressIndicator()
-                : const FaIcon(
-                    FontAwesomeIcons.cloudArrowUp,
-                  ),
+                : const FaIcon(FontAwesomeIcons.cloudArrowUp),
           )
         ],
       ),

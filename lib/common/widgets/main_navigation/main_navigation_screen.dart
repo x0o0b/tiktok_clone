@@ -112,7 +112,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               GestureDetector(
                 onTap: _onPostVideoButtonTap,
                 child: PostVideoButton(
-                  inverted: _selectedIndex != 0,
+                  inverted: _selectedIndex != 2,
                 ),
               ),
               Gaps.h16,
